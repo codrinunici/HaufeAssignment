@@ -12,9 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^20.0.3",
-    "mongoose": "^5.11.8"
-  },
-  "devDependencies": {
+    "mongoose": "^5.11.8",
     "nodemon": "^2.0.6"
   }
 }

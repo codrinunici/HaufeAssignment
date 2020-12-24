@@ -1,0 +1,35 @@
+version: "3.5"
+services:
+  react-app:
+    build: ../awesomereactapp
+    image: react-nginx
+    ports:
+      - "5000:80"
+    networks:
+      - awesome-app
+    links:
+      - mongo-app
+
+  hapi-app:
+    build: ../hapijs
+    image: hapi
+    ports:
+      - "3000:3000"
+    networks:
+      - awesome-app
+    depends_on:
+      - mongo-app
+
+  mongo-app:
+    image: mongo
+    ports:
+    - "27017:27017"
+    networks:
+      - awesome-app
+    volumes:
+      - ./data:/data/db
+
+networks:
+  awesome-app:
+    driver: bridge
+

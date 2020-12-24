@@ -6,7 +6,7 @@ const server = Hapi.server({
     host: 'localhost'
 });
 
-const connection = Mongoose.connect("mongodb://localhost:test", {useNewUrlParser: true});
+const connection = Mongoose.connect("mongodb://localhost:27017", {useNewUrlParser: true});
 
 const init = async () => {
     await server.start();
