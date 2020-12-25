@@ -53,6 +53,33 @@ server.route({
         }
     },
     method: "GET",
+    path: "/greeting",
+    handler: async (request, h) => {
+        try {
+
+            let t1 = new Date().getTime();
+            let diff = 0;
+            await GreetingsModel.aggregate([{$match: {}}], function () {
+                diff = (new Date().getTime() - t1);
+            });
+            if(diff < 0 )
+                return h.response(0);
+            else
+                return h.response(diff);
+        } catch (error) {
+            return h.response(error.message).code(300);
+        }
+    }
+});
+
+server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    method: "GET",
     path: "/",
     handler: async (request, h) => {
         try {

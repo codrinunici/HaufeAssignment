@@ -11,8 +11,8 @@ export default class AggregationTime extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:4000/`)
-            .then(res => this.setState({response: res.data})).catch(err => console.log(err));
+        axios.get(`http://localhost:4000/greeting`)
+            .then(res => this.setState({response: res.data +" milliseconds"})).catch(err => console.log(err));
     }
     render() {
         return (
