@@ -2,7 +2,7 @@ const Hapi = require('@hapi/hapi');
 const Mongoose = require('mongoose');
 
 const server = Hapi.server({
-    port: 3000,
+    port: 4000,
     host: 'localhost'
 });
 
@@ -26,11 +26,17 @@ const salutationSchema = new Mongoose.Schema({
 const GreetingsModel = Mongoose.model("greeting", salutationSchema);
 
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: "POST",
     path: "/greeting",
     handler: async (request, h) => {
         try {
-            let salutation = new GreetingsModel({salutation: JSON.parse(request.payload).salutation});
+            let salutation = new GreetingsModel({salutation: request.payload.salutation});
             let result = await salutation.save();
             return h.response(result);
         } catch (error) {
@@ -40,6 +46,12 @@ server.route({
 });
 
 server.route({
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
     method: "GET",
     path: "/",
     handler: async (request, h) => {
