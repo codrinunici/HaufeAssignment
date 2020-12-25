@@ -1,23 +1,22 @@
-version: "3.5"
 services:
   react-app:
+    restart: always
     build: ../awesomereactapp
-    image: react-nginx
     ports:
       - "5000:80"
     networks:
       - awesome-app
-    links:
-      - mongo-app
 
   hapi-app:
     build: ../hapijs
-    image: hapi
+    container_name: hapi_container
     ports:
-      - "4000:4000"
+      - "4000:3000"
     networks:
       - awesome-app
     depends_on:
+      - mongo-app
+    links:
       - mongo-app
 
   mongo-app:
